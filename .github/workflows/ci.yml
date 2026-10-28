@@ -1,0 +1,21 @@
+name: ci-dbt
+on: [push]
+
+jobs:
+  tester:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: glaces
+          POSTGRES_PASSWORD: glaces
+          POSTGRES_DB: glaces
+        ports: ["5432:5432"]
+    env:
+      PG_HOST: localhost
+      DBT_PROFILES_DIR: .
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install dbt-postgres==1.8.2
+      - run: dbt build --full-refresh

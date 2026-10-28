@@ -1,0 +1,8 @@
+version: 2
+models:
+  - name: ca_par_parfum
+    columns:
+      - name: parfum
+        tests: [unique, not_null]
+      - name: ca
+        tests: [not_null]

@@ -1,0 +1,6 @@
+name: glaces
+version: "1.0"
+config-version: 2
+profile: glaces
+model-paths: ["models"]
+seed-paths: ["seeds"]

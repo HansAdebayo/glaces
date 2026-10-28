@@ -1,0 +1,21 @@
+glaces:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('PG_HOST', 'postgres') }}"
+      port: 5432
+      user: glaces
+      password: "{{ env_var('PG_PASSWORD', 'glaces') }}"
+      dbname: glaces
+      schema: dev
+      threads: 1
+    prod:
+      type: postgres
+      host: "{{ env_var('PG_HOST', 'postgres') }}"
+      port: 5432
+      user: glaces
+      password: "{{ env_var('PG_PASSWORD', 'glaces') }}"
+      dbname: glaces
+      schema: prod
+      threads: 1
