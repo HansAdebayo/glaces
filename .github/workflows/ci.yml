@@ -4,6 +4,7 @@ on: [push]
 jobs:
   tester:
     runs-on: ubuntu-latest
+    container: ghcr.io/dbt-labs/dbt-postgres:1.8.2
     services:
       postgres:
         image: postgres:16
@@ -11,11 +12,9 @@ jobs:
           POSTGRES_USER: glaces
           POSTGRES_PASSWORD: glaces
           POSTGRES_DB: glaces
-        ports: ["5432:5432"]
     env:
-      PG_HOST: localhost
+      PG_HOST: postgres
       DBT_PROFILES_DIR: .
     steps:
       - uses: actions/checkout@v4
-      - run: pip install dbt-postgres==1.8.2
       - run: dbt build --full-refresh
