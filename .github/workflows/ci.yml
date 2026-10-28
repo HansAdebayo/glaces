@@ -17,4 +17,24 @@ jobs:
       DBT_PROFILES_DIR: .
     steps:
       - uses: actions/checkout@v4
-      - run: dbt build --full-refresh
+      - run: dbt build --full-refresh --target dev
+
+  deployer:
+    needs: tester
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    container: ghcr.io/dbt-labs/dbt-postgres:1.8.2
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: glaces
+          POSTGRES_PASSWORD: glaces
+          POSTGRES_DB: glaces
+    env:
+      PG_HOST: postgres
+      DBT_PROFILES_DIR: .
+    steps:
+      - uses: actions/checkout@v4
+      - run: dbt build --full-refresh --target prod
+      - run: dbt show --select ca_par_parfum --target prod
